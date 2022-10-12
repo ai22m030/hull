@@ -1,5 +1,11 @@
 # APRG_ConvexHull
 
+## Collaborators
+
+- Gerald Kloimstein
+- Thomas Ville
+- Adnan Vatric
+
 ## General operation jarvis march
 
 The programm has 2 modes:
