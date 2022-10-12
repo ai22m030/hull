@@ -73,7 +73,7 @@ def hull_merge(xy_left, xy_right, isinitial):
     p_top = rightmost_lefthull
     q_top = leftmost_righthull
     # Find top tangent
-    while search_top == True:
+    while search_top:
         org_angle = False
         # Navigate up the right hull clockwise (moving q)
         while search_q == True:
@@ -94,7 +94,7 @@ def hull_merge(xy_left, xy_right, isinitial):
 
         org_angle = False
         # Navigate up the lef hull counter clockwise (moving p)
-        while search_p == True:
+        while search_p:
             new_angle = np.arctan2(xy_right[q_top][1] - xy_left[p_top][1], xy_right[q_top][0] - xy_left[p_top][0])
             if org_angle == False:
                 p_top = (p_top - 1) % len(xy_left)
@@ -265,5 +265,6 @@ if app_mode == 1:
 
     plt.show()
 else:
-    for ptn in merge_hulls['0']:
-        print(ptn)
+    print(merge_hulls['0'])
+
+print('Time (s): '+str(t.timeit(number=1)))

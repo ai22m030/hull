@@ -300,7 +300,8 @@ if app_mode == 0:
     except:
         print("wrong input, proceeding with default")
         points_to_create = 100000
-    runJarvisAlgo(points_to_create)
+    t = Timer(lambda: runJarvisAlgo(points_to_create))
+    print('Time (s): '+str(t.timeit(number=1)))
 
 elif app_mode == 1:
     while not (points_to_create >= 3 and points_to_create <= 2000):

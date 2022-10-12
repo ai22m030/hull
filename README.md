@@ -36,3 +36,7 @@ In both modes you can define for how many points a hull shall be determined. The
 - math
 - matplotlib
 - imageio
+
+### How to use
+
+- For single use of 
