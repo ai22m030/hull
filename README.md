@@ -41,3 +41,5 @@ In both modes you can define for how many points a hull shall be determined. The
 
 - For showing the performance of 'Divide & Conquer', run the file 'show_performance_dc.py'
 - For showing the performance of 'Jarvis' March', run the file 'show_performance_j.py'
+
+After testing it shows that there is no best and worst case for both algorithms.
