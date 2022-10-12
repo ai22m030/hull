@@ -266,7 +266,7 @@ def runJarvisGraph(points_to_create):
 
 #     t = Timer(lambda: runJarvisAlgo(k))
 #     #Save the timerequired to the file "o_notationdata.txt"
-#     matrix = np.loadtxt('o_notation_data.txt')
+#     matrix = np.loadtxt('o_notation_data_j.txt')
 #     #Find the current time value for a specific k (note that k is stored in the first column)
 #     k_index = np.where(matrix[:,0] == k)[0]
 #     if k_index.size == 0:
@@ -274,7 +274,7 @@ def runJarvisGraph(points_to_create):
 #     else:
 #         #Get average value between current and previous
 #         matrix[k_index[0]][1] = (matrix[k_index[0]][1] + t.timeit(number=1))/2
-#     with open('o_notation_data.txt', 'wb') as f:
+#     with open('o_notation_data_j.txt', 'wb') as f:
 #         np.savetxt(f, matrix, delimiter=' ')
 
 

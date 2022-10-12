@@ -171,7 +171,7 @@ def hull_merge(xy_left, xy_right, isinitial):
             result = np.vstack((xy_left[p_top], xy_right[q_top:q_bot + 1], xy_left[p_bot:p_top]))
         elif p_top < p_bot:
             result = np.vstack((xy_left[:p_top + 1], xy_right[q_top:q_bot + 1], xy_left[p_bot:]))
-        # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
+            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top:q_bot + 1]))
     # If q_top == q_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
@@ -180,7 +180,7 @@ def hull_merge(xy_left, xy_right, isinitial):
             result = np.vstack((xy_left[p_top], xy_right[q_top], xy_left[p_bot:p_top]))
         elif p_top < p_bot:
             result = np.vstack((xy_left[:p_top + 1], xy_right[q_top], xy_left[p_bot:]))
-        # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
+            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
         # Note: This case will never happen because this implies that both the left and the right hull surround eachother because this is just a line
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top]))
@@ -206,15 +206,30 @@ def convex_hull(xy, recursion_level):
     return hull_merge_it, False
 
 
-# Input coordinationen
+app_mode = 99
 k = 100
+
+while not (app_mode == 0 or app_mode == 1):
+    print("\nChose the algorithm mode:\n")
+    try:
+        app_mode = int(input("0 - speed mode, 1 - graphics mode: "))
+    except:
+        print("wrong input")
+
+try:
+    k = int(input("How many data points shall be created (default 100) : ") or 100)
+except:
+    print("wrong input, proceeding with default")
+
+# Input coordinationen
+
 # for k in range(1001,10001):
 xy = generate_k_xy(k)
 xy = xy[xy[:, 0].argsort()]
 
 t = Timer(lambda: convex_hull(xy, 0))
 # Save the timerequired to the file "o_notationdata.txt"
-matrix = np.loadtxt('o_notation_data.txt')
+matrix = np.loadtxt('o_notation_data_dc.txt')
 # Find the current time value for a specific k (note that k is stored in the first column)
 k_index = np.where(matrix[:, 0] == k)[0]
 if k_index.size == 0:
@@ -222,21 +237,33 @@ if k_index.size == 0:
 else:
     # Get average value between current and previous
     matrix[k_index[0]][1] = (matrix[k_index[0]][1] + t.timeit(number=1)) / 2
-with open('o_notation_data.txt', 'wb') as f:
+with open('o_notation_data_dc.txt', 'wb') as f:
     np.savetxt(f, matrix, delimiter=' ')
 
-# Plot everything
-import imageio
+if app_mode == 1:
+    # Plot everything
+    import imageio
 
-plt.figure()
-plt.scatter(xy[:, 0], xy[:, 1], color='grey')
+    plt.figure()
+    plt.scatter(xy[:, 0], xy[:, 1], color='grey')
+    # plt.show()
 
-for keys in merge_hulls:
-    fig, ax = plt.subplots(1, 1)
-    for hulls in merge_hulls[keys]:
-        hulls_temp = np.vstack((hulls, hulls[0]))
-        plt.scatter(xy[:, 0], xy[:, 1], color='grey')
-        ax.plot(hulls_temp[:, 0], hulls_temp[:, 1])
+    for keys in merge_hulls:
+        fig, ax = plt.subplots(1, 1)
+        for hulls in merge_hulls[keys]:
+            hulls_temp = np.vstack((hulls, hulls[0]))
+            plt.scatter(xy[:, 0], xy[:, 1], color='grey')
+            ax.plot(hulls_temp[:, 0], hulls_temp[:, 1])
         plt.savefig(f'png_images/line-{keys}.png')
+        plt.close()
 
-plt.show()
+    frams = []
+    with imageio.get_writer('line.gif', mode='i', fps=1) as writer:
+        for i in range(len(merge_hulls) - 1, -1, -1):
+            image = imageio.imread(f'png_images/line-{i}.png')
+            writer.append_data(image)
+
+    plt.show()
+else:
+    for ptn in merge_hulls['0']:
+        print(ptn)

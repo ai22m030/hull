@@ -35,3 +35,4 @@ In both modes you can define for how many points a hull shall be determined. The
 - timeit
 - math
 - matplotlib
+- imageio

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-matrix = np.loadtxt('o_notation_data.txt')
+matrix = np.loadtxt('o_notation_data_dc.txt')
 
 #Show the default data points
 plt.figure()
