@@ -1,0 +1,19 @@
+Case																		Algorithm
+													Divide and Conquer					Jarvis' March
+
+triangle (3 vertices, all points within)
+	100 points (t100.csv)
+	10 000 points (t10000.csv)
+	100 000 points (t100000.csv)
+
+rectangle (all points an the boundary lines)
+	near best case - triangle with all points on
+	boundary lines would yet be better)
+	100 points (r100.csv)
+	10 000 points (r10000.csv)
+	100 000 points (r100000.csv)
+	
+polygone (all points within)
+	100 points (p100.csv)
+	10 000 points (p10000.csv)
+	100 000 points (p100000.csv)
