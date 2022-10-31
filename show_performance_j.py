@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-matrix = np.loadtxt('o_notation_data.txt')
+matrix = np.loadtxt('o_notation_data_j.txt')
 
 plt.plot(matrix[:,0],matrix[:,1])
 plt.xlabel('Points (n)')

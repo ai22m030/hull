@@ -288,7 +288,7 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
 
 #     t = Timer(lambda: runJarvisAlgo(k))
 #     #Save the timerequired to the file "o_notationdata.txt"
-#     matrix = np.loadtxt('o_notation_data.txt')
+#     matrix = np.loadtxt('o_notation_data_j.txt')
 #     #Find the current time value for a specific k (note that k is stored in the first column)
 #     k_index = np.where(matrix[:,0] == k)[0]
 #     if k_index.size == 0:
@@ -296,7 +296,7 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
 #     else:
 #         #Get average value between current and previous
 #         matrix[k_index[0]][1] = (matrix[k_index[0]][1] + t.timeit(number=1))/2
-#     with open('o_notation_data.txt', 'wb') as f:
+#     with open('o_notation_data_j.txt', 'wb') as f:
 #         np.savetxt(f, matrix, delimiter=' ')
 
 
@@ -317,11 +317,26 @@ while not (app_mode == 0 or app_mode == 1):
         app_mode = int(input("0 - speed mode, 1 - graphics mode: "))
     except:
         print("wrong input")
+<<<<<<< HEAD
         
 # ++++ Speed mode ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
 if app_mode == 0:                                                           
     while not (points_mode == 0 or points_mode == 1):
         print("\nHow to create datapoints?\n")
+=======
+
+if app_mode == 0:
+    try:
+        points_to_create = int(input("How many data points shall be created (default 100 000) : ") or 100000)
+    except:
+        print("wrong input, proceeding with default")
+        points_to_create = 100000
+    t = Timer(lambda: runJarvisAlgo(points_to_create))
+    print('Time (s): '+str(t.timeit(number=1)))
+
+elif app_mode == 1:
+    while not (points_to_create >= 3 and points_to_create <= 2000):
+>>>>>>> 4d661b99e5aa5360a9f5eb42b7a5c3ad415457e0
         try:
             points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
         except:
