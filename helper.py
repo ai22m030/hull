@@ -5,6 +5,7 @@ Helper program to generate csv Files for data import
 """
 
 import matplotlib.pyplot as plt
+import math
 import random
 import pandas as pd
 
@@ -66,6 +67,15 @@ def points_within_polygone(pt1, pt2, pt3, pt4):
         return (min_x + (max_x - min_x) * random.random(), min_y + (max_y - min_y) * random.random())
     elif line == 3: # point on right line
         return (min_x + (max_x - min_x) * random.random(), min_y + (max_y - min_y) * random.random())
+
+
+def points_on_cycle():
+    p = list()
+    i = 0.0
+    while i <= 2 * math.pi:
+        p.append((math.cos(i), math.sin(i)))
+        i += 0.1
+    return p
 
 # %% triangle 100 points within
 
@@ -260,3 +270,13 @@ plt.show()
 
 df = pd.DataFrame({"x":x, "y":y})
 df.to_csv("p10000.csv",sep=";",index=False,mode="w+")
+
+
+points = points_on_cycle()
+
+x, y = zip(*points)
+plt.scatter(x, y, s=0.1)
+plt.show()
+
+df = pd.DataFrame({"x":x, "y":y})
+df.to_csv("pCycle.csv",sep=";",index=False,mode="w+")
