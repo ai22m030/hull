@@ -274,9 +274,9 @@ df.to_csv("p100000.csv",sep=";",index=False,mode="w+")
 # points on cycle
 points = points_on_cycle()
 
-# x, y = zip(*points)
-# plt.scatter(x, y, s=0.1)
-# plt.show()
+x, y = zip(*points)
+plt.scatter(x, y, s=0.1)
+plt.show()
 
-# df = pd.DataFrame({"x":x, "y":y})
-# df.to_csv("pCycle.csv",sep=";",index=False,mode="w+")
+df = pd.DataFrame({"x":x, "y":y})
+df.to_csv("pCycle.csv",sep=";",index=False,mode="w+")
