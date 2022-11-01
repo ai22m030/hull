@@ -83,7 +83,7 @@ def quit_jarvis():
     pygame.quit()
 
 
-def run_jarvis_algo(points_mode = 0, points_to_create = 1000, dfile = None):
+def run_jarvis_algo(points_mode = 0, points_to_create = 1000, dfile_import = 0, dfile = None):
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # General Configuration Settings
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -103,12 +103,11 @@ def run_jarvis_algo(points_mode = 0, points_to_create = 1000, dfile = None):
         df = pd.DataFrame({"x": x, "y": y})
     
     if points_mode == 1: # points are imported from file
-        if dfile != None:
-            df = dfile
-        else:
+        if dfile_import == 0:
             df = df_file
+        else:
+            df = dfile
     
-
     data_points = list(map(tuple, df.values))  # make a list
     count_points = len(data_points)
 
@@ -148,7 +147,7 @@ def run_jarvis_algo(points_mode = 0, points_to_create = 1000, dfile = None):
 
     df_hull = pd.DataFrame(hull, columns=["x", "y"])
     # df_hull.sort_values(by=["x", "y"], inplace=True)
-    print(df_hull)
+    # print(df_hull)
 
 
 def run_jarvis_graph(points_mode=0, points_to_create=100):

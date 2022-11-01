@@ -233,7 +233,6 @@ if __name__ == "__main__":
     # for k in range(1001,10001):
     xy = generate_k_xy(k)
     xy = xy[xy[:, 0].argsort()]
-    print(xy)
 
     t = Timer(lambda: convex_hull(xy, 0))
     # Save the time-required to the file "o_notationdata.txt"

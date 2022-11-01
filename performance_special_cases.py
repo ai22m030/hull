@@ -12,8 +12,8 @@ files = ['t100.csv','t10000.csv','t100000.csv','r100.csv','r10000.csv','r100000.
 for file in files:
     #Extract the xy coordinates
     xy = genfromtxt(file, delimiter=';')[1:]
+    xy = xy[xy[:, 0].argsort()]
     #Divide and Conquer
-    print('Divide and Conquer')
     average_time = 0
     for i in range(5):
         t = Timer(lambda: convex_hull(xy, 0))
@@ -21,10 +21,9 @@ for file in files:
     print('Divide_conquer | File: '+str(file)+' | Time: '+str(average_time/5))
 
     #Jarvis March
-    print('Jarvis March')
     average_time = 0
     for i in range(5):
         df_file = pandas.read_csv(file,delimiter=";")
-        t = Timer(lambda: run_jarvis_algo(1, 0, df_file))
+        t = Timer(lambda: run_jarvis_algo(1, 0, 1 , df_file))
         average_time += t.timeit(number=1)
     print('Jarvis | File: '+str(file)+' | Time: '+str(average_time/5))
