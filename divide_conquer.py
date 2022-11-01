@@ -1,3 +1,4 @@
+from multiprocessing.resource_sharer import stop
 from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
@@ -206,65 +207,68 @@ def convex_hull(xy, recursion_level):
     return hull_merge_it, False
 
 
-app_mode = 99
-k = 100
+#If run from this file 
+if __name__ == "__main__":
+    app_mode = 99
+    k = 100
 
-while not (app_mode == 0 or app_mode == 1):
-    print("\nChose the algorithm mode:\n")
+    while not (app_mode == 0 or app_mode == 1):
+        print("\nChose the algorithm mode:\n")
+        try:
+            app_mode = int(input("0 - speed mode, 1 - graphics mode: "))
+        except:
+            print("wrong input")
+
     try:
-        app_mode = int(input("0 - speed mode, 1 - graphics mode: "))
+        k = int(input("How many data points shall be created (default 100) : ") or 100)
     except:
-        print("wrong input")
+        print("wrong input, proceeding with default")
 
-try:
-    k = int(input("How many data points shall be created (default 100) : ") or 100)
-except:
-    print("wrong input, proceeding with default")
+    # Input coordinationen
 
-# Input coordinationen
+    # for k in range(1001,10001):
+    xy = generate_k_xy(k)
+    xy = xy[xy[:, 0].argsort()]
+    print(xy)
 
-# for k in range(1001,10001):
-xy = generate_k_xy(k)
-xy = xy[xy[:, 0].argsort()]
+    t = Timer(lambda: convex_hull(xy, 0))
+    # Save the timerequired to the file "o_notationdata.txt"
+    matrix = np.loadtxt('o_notation_data_dc.txt')
+    # Find the current time value for a specific k (note that k is stored in the first column)
+    k_index = np.where(matrix[:, 0] == k)[0]
+    if k_index.size == 0:
+        matrix = np.vstack((matrix, [k, t.timeit(number=1)]))
+    else:
+        # Get average value between current and previous
+        matrix[k_index[0]][1] = (matrix[k_index[0]][1] + t.timeit(number=1)) / 2
+    with open('o_notation_data_dc.txt', 'wb') as f:
+        np.savetxt(f, matrix, delimiter=' ')
 
-t = Timer(lambda: convex_hull(xy, 0))
-# Save the timerequired to the file "o_notationdata.txt"
-matrix = np.loadtxt('o_notation_data_dc.txt')
-# Find the current time value for a specific k (note that k is stored in the first column)
-k_index = np.where(matrix[:, 0] == k)[0]
-if k_index.size == 0:
-    matrix = np.vstack((matrix, [k, t.timeit(number=1)]))
-else:
-    # Get average value between current and previous
-    matrix[k_index[0]][1] = (matrix[k_index[0]][1] + t.timeit(number=1)) / 2
-with open('o_notation_data_dc.txt', 'wb') as f:
-    np.savetxt(f, matrix, delimiter=' ')
+    if app_mode == 1:
+        # Plot everything
+        import imageio
 
-if app_mode == 1:
-    # Plot everything
-    import imageio
+        plt.figure()
+        plt.scatter(xy[:, 0], xy[:, 1], color='grey')
+        # plt.show()
 
-    plt.figure()
-    plt.scatter(xy[:, 0], xy[:, 1], color='grey')
-    # plt.show()
+        for keys in merge_hulls:
+            fig, ax = plt.subplots(1, 1)
+            for hulls in merge_hulls[keys]:
+                hulls_temp = np.vstack((hulls, hulls[0]))
+                plt.scatter(xy[:, 0], xy[:, 1], color='grey')
+                ax.plot(hulls_temp[:, 0], hulls_temp[:, 1])
+            plt.savefig(f'png_images/line-{keys}.png')
+            plt.close()
 
-    for keys in merge_hulls:
-        fig, ax = plt.subplots(1, 1)
-        for hulls in merge_hulls[keys]:
-            hulls_temp = np.vstack((hulls, hulls[0]))
-            plt.scatter(xy[:, 0], xy[:, 1], color='grey')
-            ax.plot(hulls_temp[:, 0], hulls_temp[:, 1])
-        plt.savefig(f'png_images/line-{keys}.png')
-        plt.close()
+        frams = []
+        with imageio.get_writer('line.gif', mode='i', fps=1) as writer:
+            for i in range(len(merge_hulls) - 1, -1, -1):
+                image = imageio.imread(f'png_images/line-{i}.png')
+                writer.append_data(image)
 
-    frams = []
-    with imageio.get_writer('line.gif', mode='i', fps=1) as writer:
-        for i in range(len(merge_hulls) - 1, -1, -1):
-            image = imageio.imread(f'png_images/line-{i}.png')
-            writer.append_data(image)
+        plt.show()
+    else:
+        print(merge_hulls['0'])
 
-    plt.show()
-else:
-    print(merge_hulls['0'])
-
-print('Time (s): '+str(t.timeit(number=1)))
+    print('Time (s): '+str(t.timeit(number=1)))
