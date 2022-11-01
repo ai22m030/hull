@@ -7,8 +7,6 @@ triangle (3 vertices, all points within)
 	100 000 points (t100000.csv)					4.4635962							1.4034252999999999
 
 rectangle (all points an the boundary lines)
-	near best case - triangle with all points on
-	boundary lines would yet be better)
 	100 points (r100.csv)																0.002700020000000336
 	10 000 points (r10000.csv)															0.1758001999999994
 	100 000 points (r100000.csv)														2.1816597599999996
