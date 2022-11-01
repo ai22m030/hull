@@ -10,7 +10,13 @@ for file in files:
     #Extract the xy coordinates
     xy = genfromtxt(file, delimiter=';')[1:]
     average_time = 0
+    #Divide and Conquer
     for i in range(5):
         t = Timer(lambda: convex_hull(xy, 0))
         average_time += t.timeit(number=1)
     print('Divide_conquer | File: '+str(file)+' | Time: '+str(average_time/5))
+
+    #Jarvis March
+    average_time = 0
+    for i in range(5):
+        t = Timer(lambda: convex_hull(xy, 0))

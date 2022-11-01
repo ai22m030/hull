@@ -260,14 +260,16 @@ pt3 = (1000, 770)
 pt2 = (pt3[0], pt1[1])
 pt4 = (pt1[0], pt3[1])
 
-points = [points_within_polygone(pt1, pt2, pt3, pt4) for _ in range(10000)]
+
+points = [points_within_polygone(pt1, pt2, pt3, pt4) for _ in range(100000)]
 
 x, y = zip(*points)
 plt.scatter(x, y, s=0.1)
 plt.show()
 
-df = pd.DataFrame({"x": x, "y": y})
-df.to_csv("p10000.csv", sep=";", index=False, mode="w+")
+df = pd.DataFrame({"x":x, "y":y})
+df.to_csv("p100000.csv",sep=";",index=False,mode="w+")
+
 
 # points on cycle
 points = points_on_cycle()
@@ -276,5 +278,5 @@ x, y = zip(*points)
 plt.scatter(x, y, s=0.1)
 plt.show()
 
-df = pd.DataFrame({"x": x, "y": y})
-df.to_csv("pCycle.csv", sep=";", index=False, mode="w+")
+df = pd.DataFrame({"x":x, "y":y})
+df.to_csv("pCycle.csv",sep=";",index=False,mode="w+")
