@@ -2,9 +2,9 @@ Case																		Algorithm
 													Divide and Conquer					Jarvis' March
 
 triangle (3 vertices, all points within)
-	100 points (t100.csv)																0.002816980000000058
-	10 000 points (t10000.csv)															0.15332056000000013
-	100 000 points (t100000.csv)														1.4034252999999999
+	100 points (t100.csv)							0.00485625999999999					0.002816980000000058
+	10 000 points (t10000.csv)						0.4488555000000002					0.15332056000000013
+	100 000 points (t100000.csv)					4.4635962							1.4034252999999999
 
 rectangle (all points an the boundary lines)
 	near best case - triangle with all points on
@@ -14,9 +14,9 @@ rectangle (all points an the boundary lines)
 	100 000 points (r100000.csv)														2.1816597599999996
 	
 polygone (all points within)
-	100 points (p100.csv)																0.005818679999999432
-	10 000 points (p10000.csv)															1.2587535200000004
-	100 000 points (p100000.csv)														9.263144379999998
+	100 points (p100.csv)							0.004694579999999604				0.005818679999999432
+	10 000 points (p10000.csv)						0.4421017599999999					1.2587535200000004
+	100 000 points (p100000.csv)					4.556765059999999					9.263144379999998
 
 circle (all points on edge of circle)
-	628 points (pCycle.csv)																0.016701540000002523
+	628 points (pCycle.csv)							0.0027970800000005624				0.016701540000002523
