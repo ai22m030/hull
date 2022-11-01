@@ -269,6 +269,7 @@ plt.show()
 df = pd.DataFrame({"x": x, "y": y})
 df.to_csv("p10000.csv", sep=";", index=False, mode="w+")
 
+# points on cycle
 points = points_on_cycle()
 
 x, y = zip(*points)
