@@ -233,7 +233,7 @@ def run_jarvis_graph(points_mode=0, points_to_create=100):
             pygame.draw.line(screen, line_color, hull_point, current_point, 1)
             clock.tick(velocity)
             pygame.display.update()
-            if (direction(hull_point, candidate_point, current_point)):
+            if direction(hull_point, candidate_point, current_point):
                 candidate_point = current_point
             velocity *= acceleration
 
@@ -328,7 +328,7 @@ if __name__ == "__main__":
         print('Time (s): ' + str(t.timeit(number=1)))
 
     elif app_mode == 1:
-        while not (points_to_create >= 3 and points_to_create <= 2000):
+        while not (3 <= points_to_create <= 2000):
             try:
                 points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
             except:
