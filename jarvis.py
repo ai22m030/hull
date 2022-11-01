@@ -13,7 +13,6 @@ https://www.geeksforgeeks.org/python-display-text-to-pygame-window/
 """
 
 import pygame
-import random
 import time
 from timeit import Timer
 import pandas as pd
@@ -23,38 +22,40 @@ import numpy as np
 def direction(a, b, c):
     # cross product of vectors to determine the direction
 
-    # We select the vertex following l and call it q. We check if q is turning right from the line joining l and every other point one at a time. If q is turning right, we move q to the point from where it was turning right. This way we move q towards left in each iteration and finally stop when q is in the leftmost position from l. We add q to the list of convex hull vertices.
+    # We select the vertex following l and call it q. We check if q is turning right from the line joining l and
+    # every other point one at a time. If q is turning right, we move q to the point from where it was turning right.
+    # This way we move q towards left in each iteration and finally stop when q is in the leftmost position from l.
+    # We add q to the list of convex hull vertices.
 
     # a = hull_point
     # b = candidate_point
     # c = current_point
-    
+
     # calc cross product
     cross_product = (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
-    len_v1 = ((b[0] - a[0])**2 + (b[1] - a[1])**2)**0.5 # length of vector ab
-    len_v2 = ((c[0] - a[0])**2 + (c[1] - a[1])**2)**0.5 # length of vector ac
-    len_v3 = ((c[0] - b[0])**2 + (c[1] - b[1])**2)**0.5 # length of vector bc
-    
-    #print(cross_product)
+    len_v1 = ((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2) ** 0.5  # length of vector ab
+    len_v2 = ((c[0] - a[0]) ** 2 + (c[1] - a[1]) ** 2) ** 0.5  # length of vector ac
+    len_v3 = ((c[0] - b[0]) ** 2 + (c[1] - b[1]) ** 2) ** 0.5  # length of vector bc
+
+    # print(cross_product)
     # if cross product = positive the point is clockwise
-    
-    
-    if cross_product < 0: # current_point is the new candidate_point
-        #print ("hull:", a, "cand:", b, "curr:", c)
+
+    if cross_product < 0:  # current_point is the new candidate_point
+        # print ("hull:", a, "cand:", b, "curr:", c)
         return True
-    elif ((cross_product == 0) and (len_v3 < 0)):
-        #print ("hull:", a, "cand:", b, "curr:", c)
-    #elif cross_product == 0 and ((((b[0] - a[0])**2 + (b[1] - a[1])**2)**0.5 - (((c[0] - a[0])**2 + (c[1] - a[1])**2)**0.5)) < 0):
+    elif (cross_product == 0) and (len_v3 < 0):
+        # print ("hull:", a, "cand:", b, "curr:", c) elif cross_product == 0 and ((((b[0] - a[0])**2 + (b[1] - a[
+        # 1])**2)**0.5 - (((c[0] - a[0])**2 + (c[1] - a[1])**2)**0.5)) < 0):
         return True
-    else: # current point is inside the hull, or a following collinear point
-        #print ("hull: ", a, "cand:", b, "curr:", c)
+    else:  # current point is inside the hull, or a following collinear point
+        # print ("hull: ", a, "cand:", b, "curr:", c)
         return False
-    
+
     # return (((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) > 0) # return True if positive
-    #((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) > 0
+    # ((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) > 0
 
 
-def showText(string, font, size, color, screen_height, screen_width, screen):
+def show_text(string, font, size, color, screen_height, screen_width, screen):
     pygame.font.init()
     font = pygame.font.SysFont(font, size)
 
@@ -73,16 +74,16 @@ def showText(string, font, size, color, screen_height, screen_width, screen):
     pygame.font.quit()
 
 
-def restartJarvis():
+def restart_jarvis():
     print("test")
 
 
-def quitJarvis():
-    pygame.display.quit
-    pygame.quit
+def quit_jarvis():
+    pygame.display.quit()
+    pygame.quit()
 
 
-def runJarvisAlgo(points_mode = 0, points_to_create = 1000):
+def run_jarvis_algo(points_mode=0, points_to_create=1000):
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # General Configuration Settings
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -92,18 +93,17 @@ def runJarvisAlgo(points_mode = 0, points_to_create = 1000):
     screen_height = 800
     screen_offset = 50
     hull = []
-    
-    if points_mode == 0: # points are generated at random
+
+    if points_mode == 0:  # points are generated at random
         x = np.random.randint(screen_offset, screen_width - screen_offset,
                               size=points_to_create)
         y = np.random.randint(screen_offset, screen_height - screen_offset,
                               size=points_to_create)
-    
+
         df = pd.DataFrame({"x": x, "y": y})
-    
-    if points_mode == 1: # points are imported from file
+
+    if points_mode == 1:  # points are imported from file
         df = df_file
-    
 
     data_points = list(map(tuple, df.values))  # make a list
     count_points = len(data_points)
@@ -121,7 +121,7 @@ def runJarvisAlgo(points_mode = 0, points_to_create = 1000):
     # find the hull via Jarvis March alogrithm
     hull_point = leftmost_point
 
-    while (True):
+    while True:
         hull.append(hull_point)
         candidate_point = data_points[(data_points.index(hull_point) + 1)
                                       % count_points]
@@ -132,22 +132,22 @@ def runJarvisAlgo(points_mode = 0, points_to_create = 1000):
         # current_point is any other point where we check if it is left of
         #     candidate_point
         for current_point in data_points:
-            if (direction(hull_point, candidate_point, current_point)):
+            if direction(hull_point, candidate_point, current_point):
                 candidate_point = current_point
 
         hull_point = candidate_point
 
-        if (hull_point == hull[0]):
+        if hull_point == hull[0]:
             break
 
     # end timer here
 
     df_hull = pd.DataFrame(hull, columns=["x", "y"])
-    #df_hull.sort_values(by=["x", "y"], inplace=True)
+    # df_hull.sort_values(by=["x", "y"], inplace=True)
     print(df_hull)
 
 
-def runJarvisGraph(points_mode = 0, points_to_create = 100):
+def run_jarvis_graph(points_mode=0, points_to_create=100):
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # General Configuration Settings
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -184,18 +184,17 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
     screen.fill(background_color)
 
     # build dataframe with x and y coordinates
-    
-    if points_mode == 0: # points are generated at random
+
+    if points_mode == 0:  # points are generated at random
         x = np.random.randint(screen_offset, screen_width - screen_offset,
                               size=points_to_create)
         y = np.random.randint(screen_offset, screen_height - screen_offset,
                               size=points_to_create)
-    
+
         df = pd.DataFrame({"x": x, "y": y})
-    
-    if points_mode == 1: # points are imported from file
+
+    if points_mode == 1:  # points are imported from file
         df = df_file
-    
 
     df["y"] = screen_height - df["y"]  # necessary as y-axis origin in pygame is on top left
 
@@ -216,8 +215,7 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
     # find the hull via Jarvis March alogrithm
     hull_point = leftmost_point
 
-    while (True):
-
+    while True:
         hull.append(hull_point)
         candidate_point = data_points[(data_points.index(hull_point) + 1)
                                       % count_points]
@@ -244,14 +242,14 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
         pygame.display.update()
         hull_point = candidate_point
 
-        if (hull_point == hull[0]):
+        if hull_point == hull[0]:
             break
 
     while True:
         time.sleep(1)
-        showText("Press r to restart or q to quit",
-                 "Arial Black", 45, font_color,
-                 screen_height, screen_width, screen)
+        show_text("Press r to restart or q to quit",
+                  "Arial Black", 45, font_color,
+                  screen_height, screen_width, screen)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -305,7 +303,7 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # ++++ Starting modes ++++
-#Only when launched from this file
+# Only when launched from this file
 
 if __name__ == "__main__":
     app_mode = 99
@@ -326,8 +324,8 @@ if __name__ == "__main__":
         except:
             print("wrong input, proceeding with default")
             points_to_create = 100000
-        t = Timer(lambda: runJarvisAlgo(points_to_create))
-        print('Time (s): '+str(t.timeit(number=1)))
+        t = Timer(lambda: run_jarvis_algo(points_to_create))
+        print('Time (s): ' + str(t.timeit(number=1)))
 
     elif app_mode == 1:
         while not (points_to_create >= 3 and points_to_create <= 2000):
@@ -335,55 +333,55 @@ if __name__ == "__main__":
                 points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
             except:
                 print("wrong input")
-                
-        if points_mode == 0: # create random points       
+
+        if points_mode == 0:  # create random points
             try:
                 points_to_create = int(input("How many data points shall be created (default 100 000) : ") or 100000)
             except:
                 print("wrong input, proceeding with default")
                 points_to_create = 100000
-                
-            runJarvisAlgo(points_mode, points_to_create)
-        
-        if points_mode == 1: # load points from file
+
+            run_jarvis_algo(points_mode, points_to_create)
+
+        if points_mode == 1:  # load points from file
             while True:
                 try:
                     file = input("input filename (must be in same directory): ")
-                    df_file = pd.read_csv(file,delimiter=";")
+                    df_file = pd.read_csv(file, delimiter=";")
                     break
                 except:
                     print("file not found")
-                
-            runJarvisAlgo(points_mode, 0)
+
+            run_jarvis_algo(points_mode, 0)
 
     # ++++ Speed mode ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    elif app_mode == 1: # graphics mode
+    elif app_mode == 1:  # graphics mode
         while not (points_mode == 0 or points_mode == 1):
             print("\nHow to create datapoints?\n")
             try:
                 points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
             except:
                 print("wrong input")
-                
-        if points_mode == 0: # create random points
-            while not (points_to_create >= 3 and points_to_create <= 2000):
+
+        if points_mode == 0:  # create random points
+            while not (3 <= points_to_create <= 2000):
                 try:
-                    points_to_create = int(input("How many data points shall be created (max 2000, default 100): ") or 100)
+                    points_to_create = int(
+                        input("How many data points shall be created (max 2000, default 100): ") or 100)
                 except:
                     print("wrong input")
             run = True
             while run:
-                run = runJarvisGraph(points_mode, points_to_create)
-        
-        if points_mode == 1: # load points from file
+                run = run_jarvis_graph(points_mode, points_to_create)
+
+        if points_mode == 1:  # load points from file
             while True:
                 try:
                     file = input("input filename (must be in same directory): ")
-                    df_file = pd.read_csv(file,delimiter=";")
+                    df_file = pd.read_csv(file, delimiter=";")
                     break
                 except:
                     print("file not found")
             run = True
             while run:
-                run = runJarvisGraph(points_mode, points_to_create)
-        
+                run = run_jarvis_graph(points_mode, points_to_create)

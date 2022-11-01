@@ -1,5 +1,3 @@
-from multiprocessing.resource_sharer import stop
-from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -23,7 +21,8 @@ def hull_merge(xy_left, xy_right, isinitial):
     rightmost_lefthull = np.where(xy_left[:, 0] == np.max(xy_left[:, 0], axis=0))[0][0]
     leftmost_righthull = np.where(xy_right[:, 0] == np.min(xy_right[:, 0], axis=0))[0][0]
 
-    # Sort the arrays clockwise if it's the first (isinitial), the hulls returned from this merge are already sorted clockwise
+    # Sort the arrays clockwise if it's the first (isinitial), the hulls returned from this merge are already sorted
+    # clockwise
     if isinitial == True:
         # This clockwise sorting is only required for hulls with 3 points
         placeholder_left = []
@@ -172,24 +171,28 @@ def hull_merge(xy_left, xy_right, isinitial):
             result = np.vstack((xy_left[p_top], xy_right[q_top:q_bot + 1], xy_left[p_bot:p_top]))
         elif p_top < p_bot:
             result = np.vstack((xy_left[:p_top + 1], xy_right[q_top:q_bot + 1], xy_left[p_bot:]))
-            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
+            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and
+            # shouldn't be inlcuded
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top:q_bot + 1]))
-    # If q_top == q_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
+    # If q_top == q_bot (the same indice) this implies that the other points are surround by the hull and shouldn't
+    # be inlcuded
     else:
         if p_top > p_bot:
             result = np.vstack((xy_left[p_top], xy_right[q_top], xy_left[p_bot:p_top]))
         elif p_top < p_bot:
             result = np.vstack((xy_left[:p_top + 1], xy_right[q_top], xy_left[p_bot:]))
-            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
-        # Note: This case will never happen because this implies that both the left and the right hull surround eachother because this is just a line
+            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and
+            # shouldn't be inlcuded
+        # Note: This case will never happen because this implies that both the left and the right hull surround
+        # eachother because this is just a line
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top]))
 
     return result
 
 
-# Recursively calcualtes the hulls (starting from a line or triangle)
+# Recursively calculates the hulls (starting from a line or triangle)
 merge_hulls = {}
 
 
@@ -207,7 +210,7 @@ def convex_hull(xy, recursion_level):
     return hull_merge_it, False
 
 
-#If run from this file 
+# If run from this file
 if __name__ == "__main__":
     app_mode = 99
     k = 100
@@ -224,7 +227,7 @@ if __name__ == "__main__":
     except:
         print("wrong input, proceeding with default")
 
-    # Input coordinationen
+    # Input coordination
 
     # for k in range(1001,10001):
     xy = generate_k_xy(k)
@@ -232,7 +235,7 @@ if __name__ == "__main__":
     print(xy)
 
     t = Timer(lambda: convex_hull(xy, 0))
-    # Save the timerequired to the file "o_notationdata.txt"
+    # Save the time-required to the file "o_notationdata.txt"
     matrix = np.loadtxt('o_notation_data_dc.txt')
     # Find the current time value for a specific k (note that k is stored in the first column)
     k_index = np.where(matrix[:, 0] == k)[0]
@@ -271,4 +274,4 @@ if __name__ == "__main__":
     else:
         print(merge_hulls['0'])
 
-    print('Time (s): '+str(t.timeit(number=1)))
+    print('Time (s): ' + str(t.timeit(number=1)))
