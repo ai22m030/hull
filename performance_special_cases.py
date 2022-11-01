@@ -2,7 +2,7 @@ import pandas
 from timeit import Timer
 # import helper
 from divide_conquer import convex_hull
-from jarvis import runJarvisAlgo
+from jarvis import run_jarvis_algo
 from numpy import genfromtxt
 
 files = ['t100.csv','t10000.csv','t100000.csv','r100.csv','r10000.csv','r100000.csv','p100.csv','p10000.csv','p100000.csv','pCycle.csv']
