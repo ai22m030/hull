@@ -73,7 +73,7 @@ def points_on_cycle():
     p = list()
     i = 0.0
     while i <= 2 * math.pi:
-        p.append((math.cos(i), math.sin(i)))
+        p.append((math.cos(i) * 10, math.sin(i) * 10))
         i += 0.1
     return p
 
