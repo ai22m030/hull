@@ -82,7 +82,7 @@ def quitJarvis():
     pygame.quit
 
 
-def runJarvisAlgo(points_mode = 0, points_to_create = 1000):
+def runJarvisAlgo(points_mode = 0, points_to_create = 1000, dfile = None):
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # General Configuration Settings
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -102,7 +102,10 @@ def runJarvisAlgo(points_mode = 0, points_to_create = 1000):
         df = pd.DataFrame({"x": x, "y": y})
     
     if points_mode == 1: # points are imported from file
-        df = df_file
+        if dfile != None:
+            df = dfile
+        else:
+            df = df_file
     
 
     data_points = list(map(tuple, df.values))  # make a list
