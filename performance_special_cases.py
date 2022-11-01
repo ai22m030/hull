@@ -25,6 +25,6 @@ for file in files:
     average_time = 0
     for i in range(5):
         df_file = pandas.read_csv(file,delimiter=";")
-        t = Timer(lambda: runJarvisAlgo(1, 0, df_file))
+        t = Timer(lambda: run_jarvis_algo(1, 0, df_file))
         average_time += t.timeit(number=1)
     print('Jarvis | File: '+str(file)+' | Time: '+str(average_time/5))
