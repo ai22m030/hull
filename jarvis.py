@@ -305,91 +305,85 @@ def runJarvisGraph(points_mode = 0, points_to_create = 100):
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # ++++ Starting modes ++++
+#Only when launched from this file
 
-app_mode = 99
-points_to_create = 0
-global points_mode
-points_mode = 99
+if __name__ == "__main__":
+    app_mode = 99
+    points_to_create = 0
+    global points_mode
+    points_mode = 99
 
-while not (app_mode == 0 or app_mode == 1):
-    print("\nChoose the algorithm mode:\n")
-    try:
-        app_mode = int(input("0 - speed mode, 1 - graphics mode: "))
-    except:
-        print("wrong input")
-<<<<<<< HEAD
-        
-# ++++ Speed mode ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
-if app_mode == 0:                                                           
-    while not (points_mode == 0 or points_mode == 1):
-        print("\nHow to create datapoints?\n")
-=======
-
-if app_mode == 0:
-    try:
-        points_to_create = int(input("How many data points shall be created (default 100 000) : ") or 100000)
-    except:
-        print("wrong input, proceeding with default")
-        points_to_create = 100000
-    t = Timer(lambda: runJarvisAlgo(points_to_create))
-    print('Time (s): '+str(t.timeit(number=1)))
-
-elif app_mode == 1:
-    while not (points_to_create >= 3 and points_to_create <= 2000):
->>>>>>> 4d661b99e5aa5360a9f5eb42b7a5c3ad415457e0
+    while not (app_mode == 0 or app_mode == 1):
+        print("\nChoose the algorithm mode:\n")
         try:
-            points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
+            app_mode = int(input("0 - speed mode, 1 - graphics mode: "))
         except:
             print("wrong input")
-            
-    if points_mode == 0: # create random points       
+
+    if app_mode == 0:
         try:
             points_to_create = int(input("How many data points shall be created (default 100 000) : ") or 100000)
         except:
             print("wrong input, proceeding with default")
             points_to_create = 100000
-            
-        runJarvisAlgo(points_mode, points_to_create)
-    
-    if points_mode == 1: # load points from file
-        while True:
-            try:
-                file = input("input filename (must be in same directory): ")
-                df_file = pd.read_csv(file,delimiter=";")
-                break
-            except:
-                print("file not found")
-            
-        runJarvisAlgo(points_mode, 0)
+        t = Timer(lambda: runJarvisAlgo(points_to_create))
+        print('Time (s): '+str(t.timeit(number=1)))
 
-# ++++ Speed mode ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-elif app_mode == 1: # graphics mode
-    while not (points_mode == 0 or points_mode == 1):
-        print("\nHow to create datapoints?\n")
-        try:
-            points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
-        except:
-            print("wrong input")
-            
-    if points_mode == 0: # create random points
+    elif app_mode == 1:
         while not (points_to_create >= 3 and points_to_create <= 2000):
             try:
-                points_to_create = int(input("How many data points shall be created (max 2000, default 100): ") or 100)
+                points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
             except:
                 print("wrong input")
-        run = True
-        while run:
-            run = runJarvisGraph(points_mode, points_to_create)
-    
-    if points_mode == 1: # load points from file
-        while True:
+                
+        if points_mode == 0: # create random points       
             try:
-                file = input("input filename (must be in same directory): ")
-                df_file = pd.read_csv(file,delimiter=";")
-                break
+                points_to_create = int(input("How many data points shall be created (default 100 000) : ") or 100000)
             except:
-                print("file not found")
-        run = True
-        while run:
-            run = runJarvisGraph(points_mode, points_to_create)
-    
+                print("wrong input, proceeding with default")
+                points_to_create = 100000
+                
+            runJarvisAlgo(points_mode, points_to_create)
+        
+        if points_mode == 1: # load points from file
+            while True:
+                try:
+                    file = input("input filename (must be in same directory): ")
+                    df_file = pd.read_csv(file,delimiter=";")
+                    break
+                except:
+                    print("file not found")
+                
+            runJarvisAlgo(points_mode, 0)
+
+    # ++++ Speed mode ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    elif app_mode == 1: # graphics mode
+        while not (points_mode == 0 or points_mode == 1):
+            print("\nHow to create datapoints?\n")
+            try:
+                points_mode = int(input("\nrandom (0) or import file (1)?: ") or 0)
+            except:
+                print("wrong input")
+                
+        if points_mode == 0: # create random points
+            while not (points_to_create >= 3 and points_to_create <= 2000):
+                try:
+                    points_to_create = int(input("How many data points shall be created (max 2000, default 100): ") or 100)
+                except:
+                    print("wrong input")
+            run = True
+            while run:
+                run = runJarvisGraph(points_mode, points_to_create)
+        
+        if points_mode == 1: # load points from file
+            while True:
+                try:
+                    file = input("input filename (must be in same directory): ")
+                    df_file = pd.read_csv(file,delimiter=";")
+                    break
+                except:
+                    print("file not found")
+            run = True
+            while run:
+                run = runJarvisGraph(points_mode, points_to_create)
+        
