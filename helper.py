@@ -72,7 +72,7 @@ def points_within_polygone(pt1, pt2, pt3, pt4):
 def points_on_cycle():
     p = list()
     i = 0.0
-    while i <= math.pi:
+    while i <= 2 * math.pi:
         p.append((math.cos(i), math.sin(i)))
         i += 0.1
     return p
