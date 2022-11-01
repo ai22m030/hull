@@ -23,7 +23,7 @@ def hull_merge(xy_left, xy_right, isinitial):
 
     # Sort the arrays clockwise if it's the first (isinitial), the hulls returned from this merge are already sorted
     # clockwise
-    if isinitial == True:
+    if isinitial:
         # This clockwise sorting is only required for hulls with 3 points
         placeholder_left = []
         if len(xy_left) == 3:
@@ -76,7 +76,7 @@ def hull_merge(xy_left, xy_right, isinitial):
     while search_top:
         org_angle = False
         # Navigate up the right hull clockwise (moving q)
-        while search_q == True:
+        while search_q:
             new_angle = np.arctan2(xy_right[q_top][1] - xy_left[p_top][1], xy_right[q_top][0] - xy_left[p_top][0])
             if org_angle == False:
                 q_top = (q_top + 1) % len(xy_right)
@@ -96,7 +96,7 @@ def hull_merge(xy_left, xy_right, isinitial):
         # Navigate up the lef hull counter clockwise (moving p)
         while search_p:
             new_angle = np.arctan2(xy_right[q_top][1] - xy_left[p_top][1], xy_right[q_top][0] - xy_left[p_top][0])
-            if org_angle == False:
+            if not org_angle:
                 p_top = (p_top - 1) % len(xy_left)
                 org_angle = new_angle
             # If the new angle is smaller, check the next point on the right hull clockwise
@@ -163,7 +163,8 @@ def hull_merge(xy_left, xy_right, isinitial):
             result = np.vstack((xy_left[p_top], xy_right[q_top:], xy_right[:q_bot + 1], xy_left[p_bot:p_top]))
         elif p_top < p_bot:
             result = np.vstack((xy_left[:p_top + 1], xy_right[q_top:], xy_right[:q_bot + 1], xy_left[p_bot:]))
-        # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and shouldn't be inlcuded
+        # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and
+        # shouldn't be inlcuded
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top:], xy_right[:q_bot + 1]))
     elif q_top < q_bot:
@@ -176,16 +177,16 @@ def hull_merge(xy_left, xy_right, isinitial):
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top:q_bot + 1]))
     # If q_top == q_bot (the same indice) this implies that the other points are surround by the hull and shouldn't
-    # be inlcuded
+    # be included
     else:
         if p_top > p_bot:
             result = np.vstack((xy_left[p_top], xy_right[q_top], xy_left[p_bot:p_top]))
         elif p_top < p_bot:
             result = np.vstack((xy_left[:p_top + 1], xy_right[q_top], xy_left[p_bot:]))
-            # If p_top == p_bot (the same indice) this implies that the other points are surround by the hull and
-            # shouldn't be inlcuded
+            # If p_top == p_bot (the same indices) this implies that the other points are surround by the hull and
+            # shouldn't be included
         # Note: This case will never happen because this implies that both the left and the right hull surround
-        # eachother because this is just a line
+        # each other because this is just a line
         else:
             result = np.vstack((xy_left[p_top], xy_right[q_top]))
 
